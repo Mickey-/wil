@@ -1,0 +1,35 @@
+{
+  "name": "wil",
+  "description": "frontend integration solution for 59",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Mickey-/wil",
+  "main": "index.js",
+  "author": {
+    "name": "Mickey-",
+    "email": "itaofe@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mickey-/wil.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mickey-/wil/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Mickey-/wil/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 4.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+  },
+  "keywords": [
+    "wil"
+  ]
+}
