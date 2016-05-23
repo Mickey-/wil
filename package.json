@@ -1,6 +1,6 @@
 {
   "name": "wil",
-  "description": "frontend integration solution for 59",
+  "description": "frontend workflow integration solution for 59",
   "version": "0.0.1",
   "homepage": "https://github.com/Mickey-/wil",
   "main": "index.js",
