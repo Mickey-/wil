@@ -8,6 +8,7 @@
     "name": "Mickey-",
     "email": "itaofe@gmail.com"
   },
+  "contributors": [],
   "repository": {
     "type": "git",
     "url": "https://github.com/Mickey-/wil.git"
@@ -26,6 +27,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    //"easy-table": "~1.0.0",
+    //"globby": "~3.0.1",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
   },
