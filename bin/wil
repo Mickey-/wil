@@ -1,0 +1,230 @@
+#!/usr/bin/env node
+'use strict';
+require('../index.js')
+
+
+/*
+    var fieUtil = require('../lib/fie');
+    var program = fieUtil.commander;
+    var fie = require('../index');
+    var fs = require('fs');
+    var path = require('path');
+    var packagePath = __dirname + '/../package.json';
+    var packageJSON = require(packagePath);
+    var helpInfo = {
+      'init': ['初始化项目目录 默认[ctool]', 'Init project directory'],
+      'add': ['添加创建文件命令', 'fie add'],
+      'start': ['启动项目调试服务器', 'Start up project debug server'],
+      'build': ['打包构建项目', 'Build Project.'],
+      'test': ['项目测试', 'Project test'],
+      'publish': ['项目发布', 'Project publish'],
+      'task': ['执行gulp task 任务。', 'fie task'],
+ 
+      'install': ['安装插件', 'fie install'],
+      'dedupe': ['更新当前目录下node_modules扁平化===npm dedupe', 'npm dedupe'],
+      'tstall': ['更新当前目录下node_modules===tnpm install', 'tnpm install'],
+      'uninstall': ['安装删除插件', 'fie uninstall'],
+      'update': ['更新插件', 'fie update'],
+      'list': ['插件列表', 'fie list'],
+ 
+      '--registry': ['下载资源文件服务器地址', 'npm registry'],
+      '--port': ['调试服务启动的端口，默认是9000。', 'debug server port is 9000'],
+      '--save': ['保存', 'save'],
+      '--proxy': ['pac 代理', 'proxy'],
+      '--isDedupe': ['自动执行dedupe', 'isDedupe'],
+      '--weinre': ['weinre调试', 'weinre'],
+      '--buildTo': ['打包到文件，默认是build。', 'buildTo'],
+      '--harmony': ['harmony。', 'harmony']
+    };
+ 
+    var lang = process.env.LANG || 'zh';
+    lang = (lang.indexOf('zh') === 0) ? 0 : 1;
+    program
+      .version(packageJSON.version)
+      .option('-p, --port <port>', helpInfo['--port'][lang])
+      .option('-b, --buildTo <buildTo>', helpInfo['--buildTo'][lang])
+      .option('-s, --save', helpInfo['--save'][lang])
+      .option('-d, --isDedupe', helpInfo['--isDedupe'][lang])
+      .option('-pr, --proxy', helpInfo['--proxy'][lang])
+      .option('-w, --weinre', helpInfo['--weinre'][lang])
+      .option('-r, --registry <registry>', helpInfo['--registry'][lang])
+      .option('-ha, --harmony', helpInfo['--harmony'][lang]);
+ 
+    program
+      .command('init')
+      .description(helpInfo['init'][lang])
+      .action(function () {
+        fie.init({
+          args: getArgs(this.parent.args)
+        });
+      });
+ 
+    program
+      .command('build')
+      .description(helpInfo['build'][lang])
+      .action(function () {
+        fie.build({
+          args: getArgs(this.parent.args),
+          buildTo: program.buildTo,
+          isWeinre: program.weinre,
+          tasks: 'build'
+        });
+      });
+    program
+      .command('test')
+      .description(helpInfo['test'][lang])
+      .action(function () {
+        fie.test({
+          args: getArgs(this.parent.args)
+        });
+      });
+    program
+      .command('task [task]')
+      .description(helpInfo['task'][lang])
+      .action(function (task) {
+        fie.build({
+          args: getArgs(this.parent.args),
+          tasks: task || 'build',
+          buildTo: program.buildTo
+        });
+      });
+    program
+      .command('add')
+      .description(helpInfo['add'][lang])
+      .action(function () {
+        fie.add({
+          args: getArgs(this.parent.args)
+        });
+      });
+    program
+      .command('update [name]')
+      .description(helpInfo['update'][lang])
+      .action(function () {
+        var obj = {
+          args: getArgs(this.parent.args)
+        };
+        program.registry && (obj.registry = program.registry);
+        fie.update(obj)
+      });
+    program
+      .command('install [name]')
+      .description(helpInfo['install'][lang])
+      .action(function () {
+        var obj = {
+          args: getArgs(this.parent.args)
+        };
+        program.registry && (obj.registry = program.registry);
+        fie.install(obj)
+ 
+      });
+    program
+      .command('dedupe [name]')
+      .description(helpInfo['dedupe'][lang])
+      .action(function (name) {
+        var obj = {
+          args: getArgs(this.parent.args),
+          cwd: process.cwd()
+        };
+        obj.save = program.save;
+        program.registry && (obj.registry = program.registry);
+        fie.dedupe(obj)
+      });
+    program
+      .command('tstall [name]')
+      .description(helpInfo['tstall'][lang])
+      .action(function (name) {
+        var obj = {
+          args: getArgs(this.parent.args),
+          isDedupe: program.isDedupe,
+          cwd: process.cwd()
+        };
+        obj.save = program.save;
+        program.registry && (obj.registry = program.registry);
+        fie.tstall(obj)
+      });
+    program
+      .command('list [name]')
+      .description(helpInfo['list'][lang])
+      .action(function (name) {
+        fie.list({
+          args: getArgs(this.parent.args)
+        })
+      });
+    program
+      .command('uninstall [name]')
+      .description(helpInfo['uninstall'][lang])
+      .action(function (name) {
+        fie.uninstall({
+          registry: program.registry,
+          args: getArgs(this.parent.args)
+        })
+      });
+ 
+    program
+      .command('start')
+      .description(helpInfo['start'][lang])
+      .action(function () {
+        fie.start({
+          port: program.port,
+          args: getArgs(this.parent.args),
+          isWeinre: program.weinre,
+          isProxy: program.proxy
+        });
+      });
+ 
+    program
+      .command('publish')
+      .description(helpInfo['publish'][lang])
+      .action(function (type) {
+        fie.publish({
+          args: getArgs(this.parent.args)
+        });
+      });
+    program
+      .command('*')
+      .description('deploy the given env')
+      .action(function () {
+        fie.allCommon(process.argv.slice(2));
+      });
+ 
+ 
+    //还是改用异步不等待 提示升级
+    fieUtil.checkNotify({packJsonPath: packagePath, showLog: false, update: false}, function (err, pkg) {
+      if (err) {
+        return console.error(err);
+      }
+      if (pkg && pkg.version && packageJSON.version && (pkg.version !== packageJSON.version)) {
+        var FiePath = path.join('/usr/local/lib/node_modules', packageJSON.name);
+        if (fs.existsSync(FiePath) && fs.lstatSync(FiePath).isSymbolicLink()) {
+          return console.log('本地开发Link' + packageJSON.name + '不自动更新')
+        }
+        if (pkg && pkg.fieOption && pkg.fieOption.update === true) {
+          require('../lib/util').fieUpdate();
+        }
+      }
+    });
+ 
+    if (process.argv.length === 2) {
+      fie.allCommon(process.argv.slice(2));
+    } else {
+      program.parse(process.argv);
+    }
+ 
+    //监控
+    fieUtil.log.global();
+ 
+    //捕获异常
+    process.on('uncaughtException', function (err) {
+      console.log('uncaughtException: ' + err.message);
+      fieUtil.log.error(err && err.message);
+    });
+    function getArgs(arr) {
+      var newArr = [];
+      arr = arr || [];
+      arr.pop();
+      arr.forEach(function (item) {
+         item && newArr.push(item)
+      });
+      return newArr;
+    }
+    */
