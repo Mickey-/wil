@@ -30,12 +30,10 @@
   },
   "dependencies": {
     "commander": "^2.9.0",
-    //"easy-table": "~1.0.0",
-    //"globby": "~3.0.1",
-    "minimist": "~1.2.0"
+    "minimist": "~1.2.0",
+    "qiniu": "^6.1.11"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "keywords": [
     "wil"
   ]
