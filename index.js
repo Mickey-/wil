@@ -1,5 +1,6 @@
 'use strict';
-let program = require('commander')
+const program = require('commander')
+require('./util/setGlobalConfig')
 
 program
   .version('0.0.2')
@@ -11,7 +12,7 @@ program
 let normalizedPath = require("path").join(__dirname, "module")
 require("fs").readdirSync(normalizedPath).forEach(function(file) {
   if (/\.js$/.test(file)) {
-    require("./module/" + file);
+    require("./module/" + file)
   }
 })
 
