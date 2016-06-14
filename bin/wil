@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-require('../index.js')
+require('../index')
 
 
 /*
@@ -19,14 +19,14 @@ require('../index.js')
       'test': ['项目测试', 'Project test'],
       'publish': ['项目发布', 'Project publish'],
       'task': ['执行gulp task 任务。', 'fie task'],
- 
+
       'install': ['安装插件', 'fie install'],
       'dedupe': ['更新当前目录下node_modules扁平化===npm dedupe', 'npm dedupe'],
       'tstall': ['更新当前目录下node_modules===tnpm install', 'tnpm install'],
       'uninstall': ['安装删除插件', 'fie uninstall'],
       'update': ['更新插件', 'fie update'],
       'list': ['插件列表', 'fie list'],
- 
+
       '--registry': ['下载资源文件服务器地址', 'npm registry'],
       '--port': ['调试服务启动的端口，默认是9000。', 'debug server port is 9000'],
       '--save': ['保存', 'save'],
@@ -36,7 +36,7 @@ require('../index.js')
       '--buildTo': ['打包到文件，默认是build。', 'buildTo'],
       '--harmony': ['harmony。', 'harmony']
     };
- 
+
     var lang = process.env.LANG || 'zh';
     lang = (lang.indexOf('zh') === 0) ? 0 : 1;
     program
@@ -49,7 +49,7 @@ require('../index.js')
       .option('-w, --weinre', helpInfo['--weinre'][lang])
       .option('-r, --registry <registry>', helpInfo['--registry'][lang])
       .option('-ha, --harmony', helpInfo['--harmony'][lang]);
- 
+
     program
       .command('init')
       .description(helpInfo['init'][lang])
@@ -58,7 +58,7 @@ require('../index.js')
           args: getArgs(this.parent.args)
         });
       });
- 
+
     program
       .command('build')
       .description(helpInfo['build'][lang])
@@ -115,7 +115,7 @@ require('../index.js')
         };
         program.registry && (obj.registry = program.registry);
         fie.install(obj)
- 
+
       });
     program
       .command('dedupe [name]')
@@ -159,7 +159,7 @@ require('../index.js')
           args: getArgs(this.parent.args)
         })
       });
- 
+
     program
       .command('start')
       .description(helpInfo['start'][lang])
@@ -171,7 +171,7 @@ require('../index.js')
           isProxy: program.proxy
         });
       });
- 
+
     program
       .command('publish')
       .description(helpInfo['publish'][lang])
@@ -186,8 +186,8 @@ require('../index.js')
       .action(function () {
         fie.allCommon(process.argv.slice(2));
       });
- 
- 
+
+
     //还是改用异步不等待 提示升级
     fieUtil.checkNotify({packJsonPath: packagePath, showLog: false, update: false}, function (err, pkg) {
       if (err) {
@@ -203,16 +203,16 @@ require('../index.js')
         }
       }
     });
- 
+
     if (process.argv.length === 2) {
       fie.allCommon(process.argv.slice(2));
     } else {
       program.parse(process.argv);
     }
- 
+
     //监控
     fieUtil.log.global();
- 
+
     //捕获异常
     process.on('uncaughtException', function (err) {
       console.log('uncaughtException: ' + err.message);
