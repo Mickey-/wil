@@ -13,12 +13,11 @@ const chalk = require("chalk")
 const repoPath = require('./getRepoPath')()
 //default config
 global.G_CONFIG = {
-  "deployDir": "dist/",
-  "mediaDir": "dist/res/",
-  "mediaPubType": ""
+  //"mediaPubType": "",
+  //"mediaDir": "dist/res/",
+  "deployDir": "dist/"
 }
 
-    console.dir(global.G_CONFIG)
 try {
   let wilrcContent = JSON.parse(fs.readFileSync(path.resolve(repoPath, '.wilrc'), 'utf8'))
   //合入用户配置文件
@@ -27,6 +26,6 @@ try {
   if (/SyntaxError/.test(e.toString())) {
     //json 非法
     console.log(chalk.red('[ERROR]') + ' 配置文件' + chalk.yellow('.wilrc') + '的JSON格式不合法，请检查')
-  }    
+  }
 }
 
