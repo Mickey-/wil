@@ -1,6 +1,6 @@
 /**
  * @file setGlobalConfig.js
- * @brief 设置全局配置对象到gloabl里
+ * @brief 设置全局配置对象到global里
  * @author banbian, zangtao.zt@alibaba-inc.com
  * @version 1.0.0
  * @date 2016-06-14
@@ -29,3 +29,4 @@ try {
   }
 }
 
+module.exports = global.G_CONFIG
