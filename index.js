@@ -1,6 +1,5 @@
 'use strict';
 const program = require('commander')
-require('./util/setGlobalConfig')
 
 program
   .version('0.0.2')
