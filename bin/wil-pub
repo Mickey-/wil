@@ -12,15 +12,11 @@ qiniu.conf.SECRET_KEY = 'oo'
 
 
 const deployDir = path.resolve(GC.deployDir)
-dive(path.resolve(GC.deployDir), (err, fullPath) => {
-  let key = fullPath.split(deployDir + '/')[1]
-  console.dir(key)
-  //console.dir(fullPath)
 
-})
 let gen = function* () {
   const execRet = yield exec('git remote get-url origin')
-  const repoName = path.basename(execRet.stdout, '.git')
+  // 得到项目git仓库名
+  const repoName = path.basename(execRet.stdout).replace(/.git.*\n/, '')
 
   function uptoken(bucket, key) {
     let putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key);
@@ -46,16 +42,15 @@ let gen = function* () {
     const pathAfterDeployDir = fullPath.split(deployDir + '/')[1]
     // 七牛 key
     const key = path.join('repo', repoName, pathAfterDeployDir)
+    console.log(key)
 
     let token = uptoken(bucket, key)
     //调用uploadFile上传
-    uploadFile(token, key, fullPath)
-
-
+    //uploadFile(token, key, fullPath)
   })
 
 }
-//co(gen)
+co(gen)
 /*
 co(gen).then(function (data){
   console.log('all done');
