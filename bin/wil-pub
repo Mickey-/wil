@@ -10,13 +10,13 @@ const dive = require("../util/dive")
 qiniu.conf.ACCESS_KEY = 'xx'
 qiniu.conf.SECRET_KEY = 'oo'
 
-  
+
 const deployDir = path.resolve(GC.deployDir)
 dive(path.resolve(GC.deployDir), (err, fullPath) => {
-  let key = fullPath.split(deployDir + '/')[1] 
+  let key = fullPath.split(deployDir + '/')[1]
   console.dir(key)
   //console.dir(fullPath)
-  
+
 })
 let gen = function* () {
   const execRet = yield exec('git remote get-url origin')
@@ -43,15 +43,15 @@ let gen = function* () {
   // 发布目录
   const deployDir = path.resolve(GC.deployDir)
   dive(deployDir, (err, fullPath) => {
-    const pathAfterDeplyDir = fullPath.split(deployDir + '/')[1] 
+    const pathAfterDeployDir = fullPath.split(deployDir + '/')[1]
     // 七牛 key
-    const key = path.join('repo', repoName, pathAfterDeplyDir)
+    const key = path.join('repo', repoName, pathAfterDeployDir)
 
     let token = uptoken(bucket, key)
     //调用uploadFile上传
     uploadFile(token, key, fullPath)
 
- 
+
   })
 
 }
