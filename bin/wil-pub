@@ -6,11 +6,10 @@ const repoPath = require('../util/getRepoPath')()
 const qiniu = require("qiniu")
 const path = require("path")
 const co = require("co")
+const chalk = require("chalk")
 const exec = require('child-process-promise').exec
 const dive = require("../util/dive")
-qiniu.conf.ACCESS_KEY = 'xx'
-qiniu.conf.SECRET_KEY = 'oo'
-
+const getAkSk = require("../util/getAkSk.js")
 
 const deployDir = path.resolve(GC.deployDir)
 
@@ -19,46 +18,42 @@ let gen = function* () {
   // 得到项目git仓库名
   const repoName = path.basename(execRet.stdout).replace(/.git.*\n/, '')
 
+  const AkSk = yield getAkSk()
+  qiniu.conf.ACCESS_KEY = AkSk.ak
+  qiniu.conf.SECRET_KEY = AkSk.sk
+  console.dir(qiniu.conf);
+
   function uptoken(bucket, key) {
     let putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key);
     return putPolicy.token();
   }
   function uploadFile(uptoken, key, localFile) {
-    var extra = new qiniu.io.PutExtra()
+    let extra = new qiniu.io.PutExtra()
     qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
       if(!err) {
+        let cdnUrl = path.join(GC.cdnHost, ret.key)
         // 上传成功， 处理返回值
-        console.dir(ret)
+        console.log(chalk.green('[SUCCESS] ') + chalk.cyan.underline(cdnUrl) + ' 发布成功！');
         //console.dir(ret.hash, ret.key, ret.persistentId);
       } else {
         // 上传失败， 处理返回代码
-        console.log(err);
+        console.log(chalk.red('[ERROR] ') + err);
       }
     });
   }
 
-  const bucket = 'fecdn'
   // 发布目录
   const deployDir = path.resolve(repoPath, GC.deployDir)
   dive(deployDir, (err, fullPath) => {
     const pathAfterDeployDir = fullPath.split(deployDir + '/')[1]
     // 七牛 key
     const key = path.join('repo', repoName, pathAfterDeployDir)
-    console.log(key)
 
-    let token = uptoken(bucket, key)
+    let token = uptoken(GC.bucket, key)
     //调用uploadFile上传
-    //uploadFile(token, key, fullPath)
+    uploadFile(token, key, fullPath)
   })
 
 }
+
 co(gen)
-/*
-co(gen).then(function (data){
-  console.log('all done');
-})
-*/
-
-
-
-
