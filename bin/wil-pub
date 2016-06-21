@@ -2,6 +2,7 @@
 'use strict';
 
 const GC = require('../util/setGlobalConfig')
+const repoPath = require('../util/getRepoPath')()
 const qiniu = require("qiniu")
 const path = require("path")
 const co = require("co")
@@ -27,7 +28,8 @@ let gen = function* () {
     qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
       if(!err) {
         // 上传成功， 处理返回值
-        console.log(ret.hash, ret.key, ret.persistentId);
+        console.dir(ret)
+        //console.dir(ret.hash, ret.key, ret.persistentId);
       } else {
         // 上传失败， 处理返回代码
         console.log(err);
@@ -37,7 +39,7 @@ let gen = function* () {
 
   const bucket = 'fecdn'
   // 发布目录
-  const deployDir = path.resolve(GC.deployDir)
+  const deployDir = path.resolve(repoPath, GC.deployDir)
   dive(deployDir, (err, fullPath) => {
     const pathAfterDeployDir = fullPath.split(deployDir + '/')[1]
     // 七牛 key
