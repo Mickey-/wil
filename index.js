@@ -8,7 +8,7 @@ program
 
 
 // require ./module/xx.js
-let normalizedPath = require("path").join(__dirname, "module")
+let normalizedPath = require("path").join(__dirname, "plugin")
 require("fs").readdirSync(normalizedPath).forEach(function(file) {
   if (/\.js$/.test(file)) {
     require("./plugin/" + file)
