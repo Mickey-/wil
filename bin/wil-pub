@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 'use strict';
 
-const GC = require('../util/setGlobalConfig')
-const repoPath = require('../util/getRepoPath')()
+const GC = require('../module/setGlobalConfig')
+const repoPath = require('../module/getRepoPath')()
 const qiniu = require("qiniu")
 const path = require("path")
 const co = require("co")
 const chalk = require("chalk")
 const exec = require('child-process-promise').exec
-const dive = require("../util/dive")
-const getAkSk = require("../util/getAkSk.js")
+const dive = require("../module/dive")
+const getAkSk = require("../module/getAkSk.js")
 
 const deployDir = path.resolve(GC.deployDir)
 
@@ -56,4 +56,4 @@ let gen = function* () {
 
 }
 
-co(gen)
+//co(gen)
