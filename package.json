@@ -1,9 +1,12 @@
 {
   "name": "wil",
   "description": "frontend workflow integration solution for 59",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/Mickey-/wil",
   "main": "index.js",
+  "bin": {
+    "wil": "./bin/wil"
+  }
   "author": {
     "name": "Mickey-",
     "email": "itaofe@gmail.com"
