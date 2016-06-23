@@ -5,13 +5,16 @@ const GC = require('../module/setGlobalConfig')
 const repoPath = require('../module/getRepoPath')()
 const qiniu = require("qiniu")
 const path = require("path")
+const program = require('commander')
 const co = require("co")
 const chalk = require("chalk")
 const exec = require('child-process-promise').exec
 const dive = require("../module/dive")
 const getAkSk = require("../module/getAkSk.js")
+const pushTag = require("../module/pushTag")
 
 const deployDir = path.resolve(GC.deployDir)
+program.parse(process.argv)
 
 let gen = function* () {
   const execRet = yield exec('git remote get-url origin')
@@ -42,6 +45,12 @@ let gen = function* () {
     });
   }
 
+  // 打tag
+  const tagName = program.args[0]
+  if (typeof tagName == 'string' && tagName.length) {
+    console.log(chalk.cyan('[INFO] ') + `git tag ${tagName}推送中... \n`);
+    pushTag(tagName)
+  }
   // 发布目录
   const deployDir = path.resolve(repoPath, GC.deployDir)
   dive(deployDir, (err, fullPath) => {
@@ -56,4 +65,4 @@ let gen = function* () {
 
 }
 
-//co(gen)
+co(gen)
