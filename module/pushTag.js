@@ -10,7 +10,7 @@ module.exports = (tagName) => {
       console.log(chalk.green('[SUCCESS] ') + chalk.cyan(`tag 【${tagName}】 推送成功！`))
     })
     .catch((err) => {
-      console.log(chalk.red('[ERROR] 打tag操作失败！ ') + '静态文件发布继续...')
-      console.error(chalk.red('[ERROR] '), err);
+      console.log(chalk.red('[ERROR] '), err);
+      console.log(chalk.red('[ERROR] 打tag操作失败！ ') + '静态文件发布继续...\n')
     })
 }

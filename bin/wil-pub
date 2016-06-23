@@ -24,7 +24,6 @@ let gen = function* () {
   const AkSk = yield getAkSk()
   qiniu.conf.ACCESS_KEY = AkSk.ak
   qiniu.conf.SECRET_KEY = AkSk.sk
-  console.dir(qiniu.conf);
 
   function uptoken(bucket, key) {
     let putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key);
@@ -46,8 +45,8 @@ let gen = function* () {
   }
 
   // 打tag
-  const tagName = program.args[0]
-  if (typeof tagName == 'string' && tagName.length) {
+  const tagName = program.args[0].trim()
+  if (tagName.length && tagName != Object.prototype.toString()) {
     console.log(chalk.cyan('[INFO] ') + `git tag ${tagName}推送中... \n`);
     pushTag(tagName)
   }
