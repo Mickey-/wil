@@ -1,4 +1,4 @@
-# wil
+# wil [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 frontend workflow integration solution    
 59前端工作流集成解决方案
@@ -26,3 +26,12 @@ npm install -g wil
 | ------------- | ------------- |
 | wil pub [tagname]  | 发布dist目录下文件到CDN(若指定tag_name，将打一个git tag并推送)  |
 | others  | others  |
+
+
+
+[npm-image]: https://badge.fury.io/js/wil.svg
+[npm-url]: https://npmjs.org/package/wil
+[travis-image]: https://travis-ci.org/Mickey-/wil.svg?branch=master
+[travis-url]: https://travis-ci.org/Mickey-/wil
+[daviddm-image]: https://david-dm.org/Mickey-/wil.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/Mickey-/wil
