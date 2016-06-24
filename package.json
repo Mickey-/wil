@@ -29,7 +29,8 @@
     "node": ">= 4.4.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "pretest": "echo '\\033[36m [INFO] \\033[0mmake sure you have installed \\033[36meslint globally\\033[0m !'",
+    "test": "eslint -c .eslintrc ./"
   },
   "dependencies": {
     "chalk": "^1.1.3",

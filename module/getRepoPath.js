@@ -11,7 +11,6 @@ const path = require("path")
 const fs = require("fs")
 const chalk = require("chalk")
 module.exports = () => {
-  let ret = ''
   let pathArr = ['./', '.git']
 
   const statGit = () => {
