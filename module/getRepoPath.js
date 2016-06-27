@@ -10,6 +10,7 @@
 const path = require("path")
 const fs = require("fs")
 const chalk = require("chalk")
+const log = require("./log")
 module.exports = () => {
   let pathArr = ['./', '.git']
 

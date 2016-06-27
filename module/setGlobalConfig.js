@@ -11,6 +11,7 @@ const fs = require('fs')
 const path = require('path')
 const chalk = require("chalk")
 const repoPath = require('./getRepoPath')()
+const log = require('./log')
 //default config
 global.G_CONFIG = {
   //"mediaPubType": "",

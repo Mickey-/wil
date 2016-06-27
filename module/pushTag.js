@@ -1,6 +1,7 @@
 'use strict';
 const exec = require('child-process-promise').exec
 const chalk = require("chalk")
+const log = require('./log')
 
 module.exports = (tagName) => {
   exec(`git tag ${tagName} && git push origin ${tagName}`)
