@@ -9,14 +9,14 @@
  */
 
 const chalk = require("chalk")
-const error = (msg, opt) = {
-  console.log(chalk.red('[ERROR] ') + msg);
+const error = (msg, opt) => {
+  console.log(chalk.red('[ERROR] ') + msg)
   if (opt.exit) process.exit(1)
 }
-const info = (msg) = {
-  console.log(chalk.cyan('[INFO] ') + msg);
+const info = (msg) => {
+  console.log(chalk.cyan('[INFO] ') + msg)
 }
-const success = (msg) = {
-  console.log(chalk.green('[SUCCESS] ') + msg);
+const success = (msg) => {
+  console.log(chalk.green('[SUCCESS] ') + msg)
 }
 module.exports = {error, info, success}
