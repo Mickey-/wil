@@ -8,8 +8,10 @@
  * @date 2016-06-27
  */
 
+'use strict'
 const chalk = require("chalk")
 const error = (msg, opt) => {
+  !opt && (opt = {})
   console.log(chalk.red('[ERROR] ') + msg)
   if (opt.exit) process.exit(1)
 }
