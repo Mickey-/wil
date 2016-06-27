@@ -31,7 +31,7 @@ try {
 } catch (e) {
   if (/SyntaxError/.test(e.toString())) {
     //json 非法
-    console.log(chalk.red('[ERROR]') + ' 配置文件' + chalk.yellow('.wilrc') + '的JSON格式不合法，请检查')
+    log.error(`配置文件${chalk.yellow('.wilrc')}的JSON格式不合法，请检查`)
   }
 }
 
