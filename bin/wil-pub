@@ -9,14 +9,26 @@ const program = require('commander')
 const co = require("co")
 const chalk = require("chalk")
 const exec = require('child-process-promise').exec
+const log = require("../module/log")
 const dive = require("../module/dive")
 const getAkSk = require("../module/getAkSk.js")
 const pushTag = require("../module/pushTag")
+const checkDistProd = require("../module/checkDistProd")
 
 const deployDir = path.resolve(GC.deployDir)
 program.parse(process.argv)
 
 let gen = function* () {
+  // 发布目录
+  const deployDir = path.resolve(repoPath, GC.deployDir)
+  // 检测发布目录（默认dist/）里是否已经编译成生产环境代码，如果不是则提醒、退出
+  const isDistProd = yield checkDistProd(deployDir)
+  if (!isDistProd) {
+    log.error(`请先进行${chalk.magenta('生产环境')}编译打包，再进行发布！`)
+    log.error('自动化发布中止...', {exit: true})
+  }
+  else {log.success('发布文件校验通过')}
+
   const execRet = yield exec('git remote show origin -n | grep "Fetch URL:"')
   // 得到项目git仓库名
   const repoName = path.basename(execRet.stdout).replace(/.git.*\n/, '')
@@ -34,11 +46,11 @@ let gen = function* () {
       if(!err) {
         let cdnUrl = path.join(GC.cdnHost, ret.key)
         // 上传成功， 处理返回值
-        console.log(chalk.green('[SUCCESS] ') + chalk.cyan.underline(cdnUrl) + ' 发布成功！');
+        log.success(chalk.cyan.underline(cdnUrl) + ' 发布成功！')
         //console.dir(ret.hash, ret.key, ret.persistentId);
       } else {
         // 上传失败， 处理返回代码
-        console.log(chalk.red('[ERROR] ') + err);
+        log.error(err)
       }
     });
   }
@@ -46,12 +58,10 @@ let gen = function* () {
   // 打tag
   const tagName = program.args[0].trim()
   if (tagName.length && tagName != Object.prototype.toString()) {
-    console.log(chalk.cyan('[INFO] ') + `git tag ${tagName}推送中... \n`);
+    log.info(`git tag ${tagName}推送中... \n`)
     pushTag(tagName)
   }
-  // 发布目录
-  const deployDir = path.resolve(repoPath, GC.deployDir)
-  dive(deployDir, (err, fullPath) => {
+  dive(deployDir, (fullPath) => {
     const pathAfterDeployDir = fullPath.split(deployDir + '/')[1]
     // 七牛 key
     const key = path.join('repo', repoName, pathAfterDeployDir)
@@ -64,7 +74,7 @@ let gen = function* () {
 }
 
 co(gen).then((val) => {
-  console.log(chalk.cyan('[INFO] ') + val);
+  log.info(val)
 }, (err) => {
   console.error(err.stack);
 })
