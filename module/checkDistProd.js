@@ -12,7 +12,7 @@ const checkDistProd = (deployDir) => {
   return new Promise (
     (resolve) => {
       dive(deployDir, {
-        slAction: (fullPath) => {
+        slAction: () => {
           resolve(false)
 
           // 中止dive foreach循环的函数体执行
