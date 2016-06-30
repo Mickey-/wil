@@ -10,15 +10,15 @@
 const dive = require("./dive")
 const checkDistProd = (deployDir) => {
   return new Promise (
-    (resolve, reject) => {
+    (resolve) => {
       dive(deployDir, {
-        slAction: (fullPath, stat) => {
+        slAction: (fullPath) => {
           resolve(false)
 
           // 中止dive foreach循环的函数体执行
           return true
         },
-        allDoneAction : (fullPath) => {
+        allDoneAction : () => {
           resolve(true)
         }
       })

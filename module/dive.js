@@ -24,7 +24,7 @@ let shouldBreak = false
 const dive = (dir, fileAction, dirAction, slAction, allDoneAction) => {
 
   // 获得指定目录下子目录和文件的总数; 最后 -1 为了去掉根目录自身
-  const TOTAL = +child_process.execSync(`find ${dir} -name "*"| wc -l`, {encoding: 'utf8'}).replace(/\D/g,'') - 1
+  const TOTAL = +child_process.execSync(`find ${dir} -name "*"| wc -l`, {encoding: 'utf8'}).replace(/\D/g, '') - 1
   let count = 0
   // IO操作，返回布尔值，表示是否要退出目录循环
   const doOpe = (action, fullPath) => {
