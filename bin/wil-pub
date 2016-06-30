@@ -58,17 +58,24 @@ let gen = function* () {
   // 打tag
   const tagName = program.args[0].trim()
   if (tagName.length && tagName != Object.prototype.toString()) {
-    log.info(`git tag ${tagName}推送中... \n`)
+    log.info(`git Tag ${chalk.cyan('[' + tagName + ']')} 推送中... \n`)
     pushTag(tagName)
   }
-  dive(deployDir, (fullPath) => {
-    const pathAfterDeployDir = fullPath.split(deployDir + '/')[1]
-    // 七牛 key
-    const key = path.join('repo', repoName, pathAfterDeployDir)
+  dive(deployDir, {
+    fileAction: (fullPath) => {
+      const pathAfterDeployDir = fullPath.split(deployDir + '/')[1]
+      // 七牛 key
+      const key = path.join('repo', repoName, pathAfterDeployDir)
 
-    let token = uptoken(GC.bucket, key)
-    //调用uploadFile上传
-    uploadFile(token, key, fullPath)
+      let token = uptoken(GC.bucket, key)
+      //调用uploadFile上传
+      uploadFile(token, key, fullPath)
+    },
+    allDoneAction: () => {
+      log.info('可以按住[Command]键，单击(iTerm2)或双击(原生Terminal)下面的链接直接查看CDN资源')
+    }
+  })
+  dive(deployDir, (fullPath) => {
   })
   return 'CDN发布开始...'
 }

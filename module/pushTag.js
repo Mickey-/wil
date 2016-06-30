@@ -8,7 +8,7 @@ module.exports = (tagName) => {
     .then((ret) => {
       const stdout = ret.stdout
       console.log(stdout)
-      log.success(chalk.cyan(`Tag 【${tagName}】 推送成功！`))
+      log.success('Tag ' + chalk.cyan(`[${tagName}]`) + ' 推送成功！')
     })
     .catch((err) => {
       log.error(err)
