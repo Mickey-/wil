@@ -15,7 +15,7 @@ module.exports = () => {
   let pathArr = ['./', '.git']
 
   const statGit = () => {
-    let repoPath = path.resolve(...pathArr)
+    let repoPath = path.resolve.apply(null, pathArr)
     // 如果已经递归到根目录了仍没有.git目录，则将当前目录作为repo目录，用户可能需要执行init或其他工作
     if ('/.git' == repoPath) {
       log.info(`没有检测到 ${chalk.dim.underline('.git')} ，将以当前目录作为项目根目录`)
