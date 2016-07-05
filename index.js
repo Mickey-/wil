@@ -2,7 +2,7 @@
 const program = require('commander')
 
 program
-  .version('0.0.8')
+  .version('0.0.9')
   .description('59前端工作流集成解决方案')
   //.option('pub', 'enable some bar')
   .option('-B, --baz', 'enable some baz')
