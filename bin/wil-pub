@@ -44,7 +44,7 @@ let gen = function* () {
     let extra = new qiniu.io.PutExtra()
     qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
       if(!err) {
-        let cdnUrl = path.join(GC.cdnHost, ret.key)
+        let cdnUrl = GC.cdnHost + ret.key
         // 上传成功， 处理返回值
         log.success(chalk.cyan.underline(cdnUrl) + ' 发布成功！')
         //console.dir(ret.hash, ret.key, ret.persistentId);
