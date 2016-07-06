@@ -29,7 +29,7 @@ program.alias('p')
 const gen = function* () {
   log.info('解析项目根目录的可选配置文件.wilrc, 启动自动化部署...')
   // 发布路径, 区分是局部目录/文件 还是dist目录全量发布
-  const deployPath = program.path ? path.resolve(program.path) : path.resolve(repoPath, GC.deployPath)
+  const deployPath = program.path ? path.resolve(program.path) : path.resolve(repoPath, GC.deployDir)
 
   // 检测发布目录/文件是否存在
   try {
@@ -81,7 +81,7 @@ const gen = function* () {
   // 迭代处理
   dive(deployPath, {
     fileAction: (fullPath) => {
-      const pathAfterDeployDir = fullPath.split(path.resolve(repoPath, GC.deployPath) + '/')[1]
+      const pathAfterDeployDir = fullPath.split(path.resolve(repoPath, GC.deployDir) + '/')[1]
       // 七牛 key
       const key = path.join('repo', repoName, pathAfterDeployDir)
 
