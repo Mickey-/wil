@@ -18,6 +18,7 @@ const checkDistProd = require("../module/checkDistProd")
 program.alias('p')
   .usage('[path] [options]')
   .option('--tag <tagname>', '打一个tag并推送到远端')
+  .option('--media', '是否需要发布媒体目录下的文件,默认不发布（因为图片等媒体资源很少变化，有变化可以单独发布图片）')
   .description('部署发布目录(默认dist/)下文件到CDN。若指定path(默认./)，将只发布指定文件(夹)')
   .action((path) => {
     program.path = path
@@ -88,6 +89,13 @@ const gen = function* () {
       let token = uptoken(GC.bucket, key)
       //调用uploadFile上传
       uploadFile(token, key, fullPath)
+    },
+    dirAction: (fullPath) => {
+      // 根据入参判断是否需要发布媒体目录（默认是dist/res/）
+      if (path.basename(GC.mediaDir) != path.basename(fullPath)) {
+        return false
+      }
+      return program.media ? false : undefined
     },
     allDoneAction: () => {
       log.info('可以按住[Command]键，单击(iTerm2)或双击(原生Terminal)下面的链接直接查看CDN资源')

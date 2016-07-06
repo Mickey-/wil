@@ -15,6 +15,7 @@ npm install -g wil
 
 ```
 {
+  "mediaDir": "dist/res/",      // 媒体目录，用以存放的图片、音频、pdf等等的媒体静态资源。默认不发布，需要--media参数触发发布：wil pub --media
   "deployDir": "dist/"          // 发布目录的路径，相对于项目仓库根路径
 }
 ```

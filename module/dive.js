@@ -72,8 +72,9 @@ const dive = (dir, fileAction, dirAction, slAction, allDoneAction) => {
           // 是目录
           if (stat.isDirectory()) {
             shouldBreak = doOpe(cb.dirAction, fullPath)
-            // dive into the directory
-            !shouldBreak && diveDir(fullPath)
+            // 必须为强等于。shouldBreak 可能为undefined，此时跳过对该目录的遍历，但是不影响该目录的兄弟节点（文件/文件夹）处理。
+            // 如果shouldBreak 为false，则不仅跳过对该目录的遍历，所有兄弟节点（文件/文件夹）都不再处理——在上面直接return了
+            shouldBreak === false && diveDir(fullPath)
           // 是软链
           } else if (stat.isSymbolicLink()) {
             shouldBreak = doOpe(cb.slAction, fullPath)

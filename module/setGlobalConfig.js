@@ -15,7 +15,7 @@ const log = require('./log')
 //default config
 global.G_CONFIG = {
   //"mediaPubType": "",
-  //"mediaDir": "dist/res/",
+  "mediaDir": "dist/res/",
   "deployDir": "dist/",
   // 对象存储上的空间名
   "bucket": "fecdn",
