@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 'use strict';
-
 const GC = require('../module/setGlobalConfig')
 const repoPath = require('../module/getRepoPath')()
 const qiniu = require("qiniu")
 const path = require("path")
+const fs = require("fs")
 const program = require('commander')
 const co = require("co")
 const chalk = require("chalk")
@@ -15,14 +15,31 @@ const getAkSk = require("../module/getAkSk.js")
 const pushTag = require("../module/pushTag")
 const checkDistProd = require("../module/checkDistProd")
 
-const deployDir = path.resolve(GC.deployDir)
-program.parse(process.argv)
+program.alias('p')
+  .usage('[path] [options]')
+  .option('--tag <tagname>', '打一个tag并推送到远端')
+  .description('部署发布目录(默认dist/)下文件到CDN。若指定path(默认./)，将只发布指定文件(夹)')
+  .action((path) => {
+    program.path = path
+    log.info('已指定待发路径，将进行局部发布')
+  })
 
-let gen = function* () {
-  // 发布目录
-  const deployDir = path.resolve(repoPath, GC.deployDir)
+  program.parse(process.argv)
+
+const gen = function* () {
+  log.info('解析项目根目录的可选配置文件.wilrc, 启动自动化部署...')
+  // 发布路径, 区分是局部目录/文件 还是dist目录全量发布
+  const deployPath = program.path ? path.resolve(program.path) : path.resolve(repoPath, GC.deployPath)
+
+  // 检测发布目录/文件是否存在
+  try {
+    fs.accessSync(deployPath, fs.F_OK);
+  } catch (e) {
+    log.error(e, {exit: true})
+  }
+
   // 检测发布目录（默认dist/）里是否已经编译成生产环境代码，如果不是则提醒、退出
-  const isDistProd = yield checkDistProd(deployDir)
+  const isDistProd = yield checkDistProd(deployPath)
   if (!isDistProd) {
     log.error(`请先进行${chalk.magenta('生产环境')}编译打包，再进行发布！`)
     log.error('自动化发布中止...', {exit: true})
@@ -56,14 +73,15 @@ let gen = function* () {
   }
 
   // 打tag
-  const tagName = program.args[0].trim()
-  if (tagName.length && tagName != Object.prototype.toString()) {
+  if (program.tag) {
     log.info(`git Tag ${chalk.cyan('[' + tagName + ']')} 推送中... \n`)
     pushTag(tagName)
   }
-  dive(deployDir, {
+
+  // 迭代处理
+  dive(deployPath, {
     fileAction: (fullPath) => {
-      const pathAfterDeployDir = fullPath.split(deployDir + '/')[1]
+      const pathAfterDeployDir = fullPath.split(path.resolve(repoPath, GC.deployPath) + '/')[1]
       // 七牛 key
       const key = path.join('repo', repoName, pathAfterDeployDir)
 
@@ -74,8 +92,6 @@ let gen = function* () {
     allDoneAction: () => {
       log.info('可以按住[Command]键，单击(iTerm2)或双击(原生Terminal)下面的链接直接查看CDN资源')
     }
-  })
-  dive(deployDir, (fullPath) => {
   })
   return 'CDN发布开始...'
 }

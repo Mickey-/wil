@@ -23,17 +23,6 @@ const child_process = require("child_process")
 let shouldBreak = false
 const dive = (dir, fileAction, dirAction, slAction, allDoneAction) => {
 
-  // 获得指定目录下子目录和文件的总数; 最后 -1 为了去掉根目录自身
-  const TOTAL = +child_process.execSync(`find ${dir} -name "*"| wc -l`, {encoding: 'utf8'}).replace(/\D/g, '') - 1
-  let count = 0
-  // IO操作，返回布尔值，表示是否要退出目录循环
-  const doOpe = (action, fullPath) => {
-    if (typeof action == 'function') {
-      return action(fullPath)
-    }
-    return false
-  }
-
   // 收集针对文件、目录、软链 对象的回调
   let cb = {}
   if (typeof fileAction == "object") {
@@ -42,6 +31,25 @@ const dive = (dir, fileAction, dirAction, slAction, allDoneAction) => {
     cb = {fileAction, dirAction, slAction, allDoneAction}
   }
 
+  // IO操作，返回布尔值，表示是否要退出目录循环
+  const doOpe = (action, fullPath) => {
+    if (typeof action == 'function') {
+      return action(fullPath)
+    }
+    return false
+  }
+
+  // 特殊情况！如果dir路径是一个文件
+  if (fs.lstatSync(dir).isFile()) {
+    doOpe(cb.fileAction, dir)
+    doOpe(cb.allDoneAction, dir)
+    return
+  }
+
+  // 正常情况
+  // 获得指定目录下子目录和文件的总数; 最后 -1 为了去掉根目录自身
+  const TOTAL = +child_process.execSync(`find ${dir} -name "*"| wc -l`, {encoding: 'utf8'}).replace(/\D/g, '') - 1
+  let count = 0
   // 扫描、处理每个目录
   const diveDir = (dir) => {
 
@@ -82,7 +90,6 @@ const dive = (dir, fileAction, dirAction, slAction, allDoneAction) => {
   }
 
   diveDir(dir)
-
 }
 
 module.exports = dive

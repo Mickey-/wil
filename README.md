@@ -24,10 +24,10 @@ npm install -g wil
 
 | command line  | usage |
 | ------------- | ------------- |
-| wil pub [tagname]  | 发布dist目录下文件到CDN(若指定tag_name，将打一个git tag并推送)  |
+| wil pub [path] [options]  | 部署发布目录(默认dist/)下文件到CDN。若指定[path]，将只发布指定文件(夹)  |
 | others  | others  |
 
-
+详细参数见命令的帮助界面,如 ``` wil pub -h ```
 
 [npm-image]: https://badge.fury.io/js/wil.svg
 [npm-url]: https://npmjs.org/package/wil
