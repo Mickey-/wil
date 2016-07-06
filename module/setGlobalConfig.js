@@ -16,7 +16,7 @@ const log = require('./log')
 global.G_CONFIG = {
   //"mediaPubType": "",
   //"mediaDir": "dist/res/",
-  "deployDir": "dist/",
+  "deployPath": "dist/",
   // 对象存储上的空间名
   "bucket": "fecdn",
   // 公钥私钥的存放地址

@@ -8,10 +8,10 @@
 
 'use strict'
 const dive = require("./dive")
-const checkDistProd = (deployDir) => {
+const checkDistProd = (deployPath) => {
   return new Promise (
     (resolve) => {
-      dive(deployDir, {
+      dive(deployPath, {
         slAction: () => {
           resolve(false)
 

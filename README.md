@@ -15,7 +15,7 @@ npm install -g wil
 
 ```
 {
-  "deployDir": "dist/"          // 发布目录的路径，相对于项目仓库根路径
+  "deployPath": "dist/"          // 发布目录的路径，相对于项目仓库根路径
 }
 ```
 
