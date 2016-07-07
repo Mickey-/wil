@@ -29,8 +29,16 @@ program.alias('p')
 
 const gen = function* () {
   log.info('解析项目根目录的可选配置文件.wilrc, 启动自动化部署...')
+  // 发布目录的绝对地址
+  const deployDirPath = path.resolve(repoPath, GC.deployDir)
+  const argPath = program.path
   // 发布路径, 区分是局部目录/文件 还是dist目录全量发布
-  const deployPath = program.path ? path.resolve(program.path) : path.resolve(repoPath, GC.deployDir)
+  const deployPath = argPath ? path.resolve(argPath) : deployDirPath
+
+  // 在用户自定义局部发布的情况下，检测用户指定的路径是否在发布目录下（默认dist/）
+  if (argPath && deployPath.indexOf(deployDirPath) !== 0) {
+    log.error(`非法路径 ${chalk.bgRed.black(argPath)} : 只允许指定发布目录${chalk.bgYellow.black(GC.deployDir)}'下的路径，请修正路径参数`, {exit: true})
+  }
 
   // 检测发布目录/文件是否存在
   try {
