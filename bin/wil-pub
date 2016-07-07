@@ -2,17 +2,14 @@
 'use strict';
 const GC = require('../module/setGlobalConfig')
 const repoPath = require('../module/getRepoPath')()
-const qiniu = require("qiniu")
 const path = require("path")
 const fs = require("fs")
 const program = require('commander')
 const co = require("co")
 const chalk = require("chalk")
-const exec = require('child-process-promise').exec
 const log = require("../module/log")
-const dive = require("../module/dive")
-const getAkSk = require("../module/getAkSk.js")
 const pushTag = require("../module/pushTag")
+const deployCDN = require("../module/deployCDN")
 const checkDistProd = require("../module/checkDistProd")
 
 program.alias('p')
@@ -55,65 +52,19 @@ const gen = function* () {
   }
   else {log.success('发布文件校验通过')}
 
-  const execRet = yield exec('git remote show origin -n | grep "Fetch URL:"')
-  // 得到项目git仓库名
-  const repoName = path.basename(execRet.stdout).replace(/.git.*\n/, '')
-  const AkSk = yield getAkSk()
-  qiniu.conf.ACCESS_KEY = AkSk.ak
-  qiniu.conf.SECRET_KEY = AkSk.sk
-
-  function uptoken(bucket, key) {
-    let putPolicy = new qiniu.rs.PutPolicy(bucket + ":" + key);
-    return putPolicy.token();
-  }
-  function uploadFile(uptoken, key, localFile) {
-    let extra = new qiniu.io.PutExtra()
-    qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
-      if(!err) {
-        let cdnUrl = GC.cdnHost + ret.key
-        // 上传成功， 处理返回值
-        log.success(chalk.cyan.underline(cdnUrl) + ' 发布成功！')
-        //console.dir(ret.hash, ret.key, ret.persistentId);
-      } else {
-        // 上传失败， 处理返回代码
-        log.error(err)
-      }
-    });
-  }
+  // 发布到CDN, 异步
+  deployCDN(deployPath, deployDirPath, program)
 
   // 打tag
   if (program.tag) {
     log.info(`git Tag ${chalk.cyan('[' + tagName + ']')} 推送中... \n`)
     pushTag(tagName)
   }
-
-  // 迭代处理
-  dive(deployPath, {
-    fileAction: (fullPath) => {
-      const pathAfterDeployDir = fullPath.split(path.resolve(repoPath, GC.deployDir) + '/')[1]
-      // 七牛 key
-      const key = path.join('repo', repoName, pathAfterDeployDir)
-
-      let token = uptoken(GC.bucket, key)
-      //调用uploadFile上传
-      uploadFile(token, key, fullPath)
-    },
-    dirAction: (fullPath) => {
-      // 根据入参判断是否需要发布媒体目录（默认是dist/res/）
-      if (path.basename(GC.mediaDir) != path.basename(fullPath)) {
-        return false
-      }
-      return program.media ? false : undefined
-    },
-    allDoneAction: () => {
-      log.info('可以按住[Command]键，单击(iTerm2)或双击(原生Terminal)下面的链接直接查看CDN资源')
-    }
-  })
   return 'CDN发布开始...'
 }
 
 co(gen).then((val) => {
-  log.info(val)
+  val && log.info(val)
 }, (err) => {
   console.error(err.stack);
 })
