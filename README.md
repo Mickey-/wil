@@ -32,7 +32,7 @@ npm install -g wil
 
 [npm-image]: https://badge.fury.io/js/wil.svg
 [npm-url]: https://npmjs.org/package/wil
-[travis-image]: https://travis-ci.org/Mickey-/wil.svg?branch=master
-[travis-url]: https://travis-ci.org/Mickey-/wil
-[daviddm-image]: https://david-dm.org/Mickey-/wil.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/Mickey-/wil
+[travis-image]: https://travis-ci.org/59fe/wil.svg?branch=master
+[travis-url]: https://travis-ci.org/59fe/wil
+[daviddm-image]: https://david-dm.org/59fe/wil.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/59fe/wil
