@@ -42,7 +42,7 @@ module.exports = (deployPath, deployDirPath, program) => {
     // 迭代处理
     dive(deployPath, {
       fileAction: (fullPath) => {
-        const pathAfterDeployDir = fullPath.split(deployDirPath + '/')[1]
+        const pathAfterDeployDir = fullPath.split(deployDirPath)[1]
         // 七牛 key
         const key = path.join('repo', repoName, pathAfterDeployDir)
 
