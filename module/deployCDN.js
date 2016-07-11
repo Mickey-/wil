@@ -44,7 +44,7 @@ module.exports = (deployPath, deployDirPath, program) => {
       fileAction: (fullPath) => {
         const pathAfterDeployDir = fullPath.split(deployDirPath)[1]
         // 七牛 key
-        const key = path.join('repo', repoName, pathAfterDeployDir)
+        const key = path.join('repo', repoName, pathAfterDeployDir).replace(/\\/g, '/')
 
         let token = uptoken(GC.bucket, key)
         //调用uploadFile上传
