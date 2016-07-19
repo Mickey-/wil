@@ -42,6 +42,9 @@ module.exports = (deployPath, deployDirPath, program) => {
     // 迭代处理
     dive(deployPath, {
       fileAction: (fullPath) => {
+        console.log(path.basename(fullPath))
+        // 跳过各个[.]开头的文件（通常是不同系统的系统隐藏文件，比如.DS_Store等）
+        if (path.basename(fullPath)[0] == '.') return
         const pathAfterDeployDir = fullPath.split(deployDirPath)[1]
         // 七牛 key
         const key = path.join('repo', repoName, pathAfterDeployDir).replace(/\\/g, '/')
