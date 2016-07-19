@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 'use strict';
 const GC = require('../module/setGlobalConfig')
-const repoPath = require('../module/getRepoPath')()
 const path = require("path")
 const fs = require("fs")
 const program = require('commander')
@@ -27,7 +26,7 @@ program.alias('p')
 const gen = function* () {
   log.info('解析项目根目录的可选配置文件.wilrc, 启动自动化部署...')
   // 发布目录的绝对地址
-  const deployDirPath = path.resolve(repoPath, GC.deployDir)
+  const deployDirPath = path.resolve(GC.repoPath, GC.deployDir)
   const argPath = program.path
   // 发布路径, 区分是局部目录/文件 还是dist目录全量发布
   const deployPath = argPath ? path.resolve(argPath) : deployDirPath
