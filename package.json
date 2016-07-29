@@ -1,7 +1,7 @@
 {
   "name": "wil",
   "description": "frontend workflow integration solution for 59",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "homepage": "https://github.com/59fe/wil",
   "main": "index.js",
   "bin": {
@@ -37,8 +37,10 @@
     "child-process-promise": "^2.0.3",
     "co": "^4.6.0",
     "commander": "~2.9.0",
+    "generator-rrrw": "~0.1.0",
     "minimist": "~1.2.0",
-    "qiniu": "^6.1.11"
+    "qiniu": "^6.1.11",
+    "yeoman-environment": "^1.6.3"
   },
   "devDependencies": {},
   "keywords": [
