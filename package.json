@@ -40,6 +40,7 @@
     "generator-rrrw": "~0.1.0",
     "minimist": "~1.2.0",
     "qiniu": "^6.1.11",
+    "generator-rrrw": "^0.1.3",
     "yeoman-environment": "^1.6.3"
   },
   "devDependencies": {},

@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+'use strict';
+const GC = require('../module/setGlobalConfig')
+const program = require('commander')
+const yo = require("yeoman-environment")
+const log = require("../module/log")
+
+program.alias('in')
+  .usage('[options]')
+  //.option('react <tagname>', '打一个tag并推送到远端')
+  .description('初始化一个react全家桶项目')
+
+  program.parse(process.argv)
+
+const env = yo.createEnv()
+env.lookup(function () {
+  env.run('rrrw', { 'skip-install': false }, () => {
+    log.success('done')
+  })
+})
+
