@@ -28,6 +28,7 @@ npm install -g wil
 | command line  | usage |
 | ------------- | ------------- |
 | wil pub [path] [options]  | 只部署发布目录(默认dist/)下文件到CDN。若指定[path]，将只发布指定文件(夹)  |
+| wil init | 初始化一个 [react全家桶](https://github.com/59fe/generator-rrrw)的项目框架 |
 | others  | others  |
 
 使用前 __务必如``` wil pub -h ``` 了解详细参数__
