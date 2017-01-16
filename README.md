@@ -1,7 +1,7 @@
 # wil [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 frontend workflow integration solution    
-59前端工作流集成解决方案
+骑迹前端工作流集成解决方案
 
 ## Installation
 
