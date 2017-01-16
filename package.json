@@ -1,8 +1,8 @@
 {
   "name": "wil",
   "description": "frontend workflow integration solution for 59",
-  "version": "0.0.9",
-  "homepage": "https://github.com/Mickey-/wil",
+  "version": "0.2.3",
+  "homepage": "https://github.com/59fe/wil",
   "main": "index.js",
   "bin": {
     "wil": "./bin/wil"
@@ -14,15 +14,15 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mickey-/wil.git"
+    "url": "https://github.com/59fe/wil.git"
   },
   "bugs": {
-    "url": "https://github.com/Mickey-/wil/issues"
+    "url": "https://github.com/59fe/wil/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/Mickey-/wil/blob/master/LICENSE-MIT"
+      "url": "https://github.com/59fe/wil/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {
@@ -37,8 +37,10 @@
     "child-process-promise": "^2.0.3",
     "co": "^4.6.0",
     "commander": "~2.9.0",
+    "generator-rrrw": "^0.1.7",
     "minimist": "~1.2.0",
-    "qiniu": "^6.1.11"
+    "qiniu": "^6.1.11",
+    "yeoman-environment": "^1.6.3"
   },
   "devDependencies": {},
   "keywords": [

@@ -14,6 +14,7 @@ const repoPath = require('./getRepoPath')()
 const log = require('./log')
 //default config
 global.G_CONFIG = {
+  "repoPath": repoPath,
   //"mediaPubType": "",
   "mediaDir": "dist/res/",
   "deployDir": "dist/",

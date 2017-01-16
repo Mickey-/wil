@@ -11,8 +11,14 @@
 'use strict'
 const chalk = require("chalk")
 const error = (msg, opt) => {
+
   !opt && (opt = {})
-  console.log(chalk.red('[ERROR] ') + msg)
+  if (typeof msg === 'object') {
+    console.log(chalk.red('[ERROR] (/= _ =)/~┴┴ ) ↓ '))
+    console.dir(msg)
+  } else {
+    console.log(chalk.red('[ERROR] ') + msg)
+  }
   if (opt.exit) process.exit(1)
 }
 const info = (msg) => {

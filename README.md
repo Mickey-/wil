@@ -22,17 +22,20 @@ npm install -g wil
 
 ## Usage
 
+使用前 __务必如``` wil pub -h ``` 了解详细参数__
+
 
 | command line  | usage |
 | ------------- | ------------- |
-| wil pub [path] [options]  | 部署发布目录(默认dist/)下文件到CDN。若指定[path]，将只发布指定文件(夹)  |
+| wil pub [path] [options]  | 只部署发布目录(默认dist/)下文件到CDN。若指定[path]，将只发布指定文件(夹)  |
+| wil init | 初始化一个 [react全家桶](https://github.com/59fe/generator-rrrw)的项目框架 |
 | others  | others  |
 
-详细参数见命令的帮助界面,如 ``` wil pub -h ```
+使用前 __务必如``` wil pub -h ``` 了解详细参数__
 
 [npm-image]: https://badge.fury.io/js/wil.svg
 [npm-url]: https://npmjs.org/package/wil
-[travis-image]: https://travis-ci.org/Mickey-/wil.svg?branch=master
-[travis-url]: https://travis-ci.org/Mickey-/wil
-[daviddm-image]: https://david-dm.org/Mickey-/wil.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/Mickey-/wil
+[travis-image]: https://travis-ci.org/59fe/wil.svg?branch=master
+[travis-url]: https://travis-ci.org/59fe/wil
+[daviddm-image]: https://david-dm.org/59fe/wil.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/59fe/wil
