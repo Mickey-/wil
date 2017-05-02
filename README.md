@@ -1,7 +1,7 @@
 # wil [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 frontend workflow integration solution    
-59前端工作流集成解决方案
+骑迹前端工作流集成解决方案
 
 ## Installation
 
@@ -22,13 +22,16 @@ npm install -g wil
 
 ## Usage
 
+使用前 __务必如``` wil pub -h ``` 了解详细参数__
+
 
 | command line  | usage |
 | ------------- | ------------- |
-| wil pub [path] [options]  | 部署发布目录(默认dist/)下文件到CDN。若指定[path]，将只发布指定文件(夹)  |
+| wil pub [path] [options]  | 只部署发布目录(默认dist/)下文件到CDN。若指定[path]，将只发布指定文件(夹)  |
+| wil init | 初始化一个 [react全家桶](https://github.com/59fe/generator-rrrw)的项目框架 |
 | others  | others  |
 
-详细参数见命令的帮助界面,如 ``` wil pub -h ```
+使用前 __务必如``` wil pub -h ``` 了解详细参数__
 
 [npm-image]: https://badge.fury.io/js/wil.svg
 [npm-url]: https://npmjs.org/package/wil
