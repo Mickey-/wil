@@ -15,9 +15,11 @@ const checkDistProd = (deployPath) => {
     (resolve) => {
       dive(deployPath, {
         fileAction: (fullPath) => {
+          // 获得仓库名，检查是不是在压缩检测白名单里
+          const repoName = child_process.execSync('git config --get remote.origin.url', {encoding:'utf8'}).match(/\/\S+.git/)[0].slice(1, -4)
           const ext = path.extname(fullPath)
-          // 检查发布目录下的js文件，如果有行数大于100的js文件，那么认为没有进行生产环境编译
-          if (ext == '.js') {
+          // 对于非白名单里的项目仓库，检查发布目录下的js文件，如果有行数大于100的js文件，那么认为没有进行生产环境编译
+          if (global.G_CONFIG.whiteList.indexOf(repoName) == -1 && ext == '.js') {
             const wcRet = child_process.execSync(`wc -l ${fullPath}`, {encoding: 'utf8'})
             const lines = +wcRet.match(/\d+/)[0]
             if (lines > 100) {
