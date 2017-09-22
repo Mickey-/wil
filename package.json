@@ -1,7 +1,7 @@
 {
   "name": "wil",
   "description": "frontend workflow integration solution for qiji",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/59fe/wil",
   "main": "index.js",
   "bin": {

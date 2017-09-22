@@ -21,7 +21,7 @@ global.G_CONFIG = {
   // 对象存储上的空间名
   "bucket": "fecdn",
   // 公钥私钥的存放地址
-  "AKSK": "http://code.59store.com/snippets/2/raw",
+  "AKSK": "http://code.dbike.co/snippets/2/raw",
   // cdn域名
   "cdnHost": "http://fecdn.qeebike.com/",
   // 项目仓库白名单，在白名单里的项目仓库可以不压缩直接发布资源
