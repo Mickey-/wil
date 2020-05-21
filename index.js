@@ -2,7 +2,7 @@
 const program = require('commander')
 
 program
-  .version('0.3.1')
+  .version('0.4.0')
   .description('骑迹前端工作流集成解决方案')
   .usage('<command> [options]')
 

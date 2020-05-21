@@ -12,7 +12,9 @@ const GC = global.G_CONFIG
 module.exports = (deployPath, deployDirPath, program) => {
   const gen = function* () {
 
-    const execRet = yield exec('git remote show origin -n | grep "Fetch URL:"')
+    const execRet = yield exec('git remote show origin -n | grep -e "\:.*.git$"')
+    console.log(execRet.stdout.join('\n'))
+    return
     // 得到项目git仓库名
     const repoName = path.basename(execRet.stdout).replace(/.git.*\n/, '')
     const AkSk = yield getAkSk()

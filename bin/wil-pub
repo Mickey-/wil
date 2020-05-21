@@ -86,7 +86,7 @@ const gen = function* () {
     log.info(`git Tag ${chalk.cyan('[' + tagName + ']')} 推送中... \n`)
     pushTag(tagName)
   }
-  return 'CDN发布开始...'
+  return '请确认在内网环境或 vpn 接入公司内网，CDN发布开始...'
 }
 
 co(gen).then((val) => {
