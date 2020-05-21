@@ -44,9 +44,11 @@ module.exports = (deployPath, deployDirPath, program) => {
       fileAction: (fullPath) => {
         // 跳过各个[.]开头的文件（通常是不同系统的系统隐藏文件，比如.DS_Store等）
         if (path.basename(fullPath)[0] == '.') return
-        const pathAfterDeployDir = fullPath.split(deployDirPath)[1]
-        // 七牛 key
-        const key = path.join('repo', repoName, pathAfterDeployDir).replace(/\\/g, '/')
+        // path.relative('/qiji-erp/dist', '/qiji-erp/dist/xx.js')  => 'xx.js'
+        // path.relative('/qiji-erp/dist', '/qiji-erp/xx.js')  => '../xx.js'    有时传入 --force 参数会导致有 ../
+        const pathRelativeDeployDir = path.relative(deployDirPath, fullPath)
+        // 七牛 key.  把形如'../build/vendor.4ser23.dll.js' 的字符串替换为 'build/vendor.4ser23.dll.js'
+        const key = path.join('repo', repoName, pathRelativeDeployDir.replace(/\\/g, '/').replace(/^[\.\/]*/, ''))
 
         let token = uptoken(GC.bucket, key)
         //调用uploadFile上传
